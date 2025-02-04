@@ -189,19 +189,7 @@
                                 <input class="form-control d-none" placeholder="Enter event name" type="text" name="title" id="event-title" required value="">
                                 <div class="invalid-feedback">Please provide a valid event name</div>
                             </div>
-                        </div>
-                        <!--end col-->
-                        <div class="col-12">
-                            <div class="mb-3">
-                                <label class="form-label">Event Date</label>
-                                <div class="input-group d-none">
-                                    <input type="text" id="event-start-date" class="form-control flatpickr flatpickr-input" placeholder="Select date" readonly required>
-                                    <span class="input-group-text"><i class="ri-calendar-event-line"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end col-->
-                        <div class="col-12" id="event-time">
+                        </div>  <div class="col-12" id="event-time">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
@@ -227,6 +215,18 @@
                             <!--end row-->
                         </div>
                         <!--end col-->
+                        <!--end col-->
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Event Date</label>
+                                <div class="input-group d-none">
+                                    <input type="text" id="event-start-date" class="form-control flatpickr flatpickr-input" placeholder="Select date" readonly required>
+                                    <span class="input-group-text"><i class="ri-calendar-event-line"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end col-->
+                      
                         <div class="col-12">
                             <div class="mb-3">
                                 <label for="event-location" class="form-label">Location</label>
