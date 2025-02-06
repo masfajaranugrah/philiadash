@@ -24,7 +24,7 @@
                                                 <div class="mb-3">
                                                     <div class="input-group">
                                                         <span class="input-group-text" id="basic-addon"><i class="ri-user-3-line"></i></span>
-                                                        <input type="text" class="form-control @error('email') is-invalid @enderror" id="username"  name="email" value="{{ old('email', 'admin@sss.com') }}" placeholder="Enter username">
+                                                        <input type="text" class="form-control @error('email') is-invalid @enderror" id="username"  name="email"   placeholder="Enter username">
                                                         @error('email')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -36,7 +36,7 @@
                                                     <div class="position-relative auth-pass-inputgroup overflow-hidden">
                                                         <div class="input-group">
                                                             <span class="input-group-text" id="basic-addon1"><i class="ri-lock-2-line"></i></span>
-                                                            <input type="password" class="form-control pe-5 password-input @error('password') is-invalid @enderror" placeholder="Enter password" id="password-input" name="password"  value="Joker12@">
+                                                            <input type="password" class="form-control pe-5 password-input @error('password') is-invalid @enderror" placeholder="Enter password" id="password-input" name="password"   >
                                                             @error('password')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -56,17 +56,7 @@
                                                 <div class="mt-4">
                                                     <button class="btn btn-primary w-100" type="submit">Sign In</button>
                                                 </div>
-                                                <div class="mt-4 pt-2 text-center">
-                                                    <div class="signin-other-title position-relative">
-                                                        <h5 class="fs-sm mb-4 title">Sign In with</h5>
-                                                    </div>
-                                                    <div class="pt-2 hstack gap-2 justify-content-center">
-                                                        <button type="button" class="btn btn-subtle-primary btn-icon"><i class="ri-facebook-fill fs-lg"></i></button>
-                                                        <button type="button" class="btn btn-subtle-danger btn-icon"><i class="ri-google-fill fs-lg"></i></button>
-                                                        <button type="button" class="btn btn-subtle-dark btn-icon"><i class="ri-github-fill fs-lg"></i></button>
-                                                        <button type="button" class="btn btn-subtle-info btn-icon"><i class="ri-twitter-fill fs-lg"></i></button>
-                                                    </div>
-                                                </div>
+                                             
                                             </form>
                                             <div class="text-center mt-5">
                                                 <p class="mb-1">Don't have an account yet?</p>

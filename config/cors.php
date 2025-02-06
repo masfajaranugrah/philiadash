@@ -14,9 +14,8 @@ return [
 
     'supports_credentials' => true,
 
-    'allowed_origins' => [
-        'http://localhost:5173',  // React development server
-    ],
+    'allowed_origins' => ['http://192.168.1.22:5173'],  // React app URL
+
 
     'allowed_origins_patterns' => [],
 

@@ -37,8 +37,8 @@
                                                 <div class="mb-3">
                                                     <div class="input-group">
                                                         <span class="input-group-text" id="basic-addon"><i class="ri-user-3-line"></i></span>
-                                                        <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" id="username" placeholder="Enter username">
-                                                        @error('name')
+                                                        <input type="text" class="form-control  @error('firstname') is-invalid @enderror" name="firstname" value="{{ old('firstname') }}" id="username" placeholder="Enter username">
+                                                        @error('firstname')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -76,18 +76,7 @@
                                                     <button class="btn btn-primary w-100" type="submit">Sign Up</button>
                                                 </div>
 
-                                                <div class="mt-4 text-center">
-                                                    <div class="signin-other-title position-relative">
-                                                        <h5 class="fs-sm mb-4 title text-muted">Create account with</h5>
-                                                    </div>
-
-                                                    <div>
-                                                        <button type="button" class="btn btn-subtle-primary btn-icon "><i class="ri-facebook-fill fs-lg"></i></button>
-                                                        <button type="button" class="btn btn-subtle-danger btn-icon "><i class="ri-google-fill fs-lg"></i></button>
-                                                        <button type="button" class="btn btn-subtle-dark btn-icon "><i class="ri-github-fill fs-lg"></i></button>
-                                                        <button type="button" class="btn btn-subtle-info btn-icon "><i class="ri-twitter-fill fs-lg"></i></button>
-                                                    </div>
-                                                </div>
+                                              
                                             </form>
                                         </div>
                                         <div class="mt-4 text-center">

@@ -7,6 +7,8 @@ use App\Models\cr;
 use App\Models\Question;
 use Illuminate\Http\Request;
 
+use function Laravel\Prompts\error;
+
 class QuestionController extends Controller
 {
     /**
@@ -39,9 +41,13 @@ class QuestionController extends Controller
             'pertanyaan' => 'required|string',
             'jawaban' => 'required|string',
   
-        ]);
-   
-        
+        ],
+    [
+        'pertanyaan.required' => 'pertanyaan tidak boleh kosong',
+         'jawaban.required' => 'jawaban tidak boleh kosong',
+
+    ]);
+    
             Question::create([
                 'pertanyaan' => $request->pertanyaan,
                 'jawaban' => $request->jawaban,
@@ -49,8 +55,8 @@ class QuestionController extends Controller
                 
             ]);
         
-
-        return redirect('question')->with('success', 'create new barang success ');
+     
+        return redirect('question')->with('success', 'FAQ berhasil di buat!');
     }
 
 
@@ -75,7 +81,7 @@ class QuestionController extends Controller
         ]);
     
       
-        return redirect('question')->with('success', 'Update barang berhasil!');
+        return redirect('question')->with('success', 'Update FAQ berhasil!');
     }
 
     /**
@@ -93,7 +99,7 @@ class QuestionController extends Controller
 
         $question->delete();
     
-        return redirect()->back()->with('success', 'Wahana dan gambar berhasil dihapus.');
+        return redirect()->back()->with('success', 'FAQ berhasil dihapus.');
     }
    
 }

@@ -3,15 +3,21 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>@yield('title') | pro fajar anugrah </title>
+    <title>@yield('title') | philia </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
+    <meta content="Philia" name="description" />
+    <meta content="Philia" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico') }}">
     @include('layouts.head-css')
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
+  <!-- Toastr CSS -->
+ <!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ 
 </head>
 
 {{-- @section('body') --}}
@@ -45,6 +51,10 @@
 
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
+
+  
+    
+ 
 </body>
 
 </html>

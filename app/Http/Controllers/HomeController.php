@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\User;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
@@ -36,9 +38,16 @@ class HomeController extends Controller
         return abort(404);
     }
 
-    public function root()
+    public function dash()
     {
-        return view('index');
+        $mobileCount = Visitor::where('device', 'Mobile')->count();
+        $tabletCount = Visitor::where('device', 'Tablet')->count();
+        $desktopCount = Visitor::where('device', 'Desktop')->count();
+        $event = Event::all();
+ 
+        // Mengirimkan data ke view dengan nama variabel yang sesuai
+        return view('index', compact('mobileCount', 'tabletCount', 'desktopCount', 'event'));
+     
     }
 
 

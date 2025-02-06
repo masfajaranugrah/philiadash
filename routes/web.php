@@ -16,14 +16,10 @@ use App\Http\Controllers\Fitur\WahanaController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
-Route::get('index/{locale}',[App\Http\Controllers\HomeController::class, 'lang']);
+Route::get('/', [App\Http\Controllers\HomeController::class, 'dash'])->name('dash');
 Route::get('/2b7e151628aed2a6abf7158809cf4f3c',[WahanaController::class, 'index']);
 
 Route::get('/wahana-view',[WahanaController::class, 'view'])->name('wahana');
@@ -43,6 +39,7 @@ Route::get('/aWJ1aWl1aHVodXNpb2hzdWlvaGo7c2lv',[QuestionController::class, 'inde
 
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\UserController;
 
 Route::post('/events', [EventController::class, 'store']);
 Route::get('/events', [EventController::class, 'index']);
@@ -50,4 +47,12 @@ Route::get('/events-view', [EventController::class, 'view'])->name('event');
 Route::put('/events/{id}', [EventController::class, 'update']);
 Route::delete('/events/{id}', [EventController::class, 'destroy']);
 
+
+Route::get('/user', [UserController::class, 'view'])->name('user');
+Route::get('/user-setting', [UserController::class, 'index'])->name('user-setting');
+Route::post('/profile-post', [UserController::class, 'store'])->name('profile-post');
+Route::patch('/profile/update/{id}', [UserController::class, 'update'])->name('profile.update');
+Route::patch('/reset/{id}', [UserController::class, 'updatePassword'])->name('reset');
+
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+ 

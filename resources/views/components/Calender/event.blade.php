@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title') @lang('translation.calendar') @endsection
+@section('title') Event @endsection
 @section('content')
 
 <div class="calendar-wrapper d-lg-flex gap-5">
@@ -12,20 +12,32 @@
                 <h5 class="mb-2 fs-lg">Upcoming Event</h5>
                 <p class="text-muted">Don't miss scheduled events</p>
                 <div class="pe-2 me-n1 mb-3" data-simplebar style="height: 250px">
+                 
                     @foreach ( $event as $items )
-                      <div class="card mb-3 border-0 border-bottom">
-                        <div class="card-body p-1 pb-3">
-                            <div class="row align-items-center">
-                                <div class="col-2">
-                                    <div class="fw-bolder"><span class="fw-medium">{{ \Carbon\Carbon::parse($items->start)->format('d M') }}</span></div>
-                                </div>
-                                <div class="col-10 border-start border-4 border-info-subtle ps-3 rounded">
-                                    <h6 class="card-title fs-md">{{ $items->title }}</h6>
-                                    <p class="text-muted text-truncate mb-0 text-truncate">{{ $items->description }}</p>
-                                </div>
-                            </div>
+                         <div class="d-flex bg-body-secondary rounded border border-blue-200">
+                        <div class="flex-shrink-0 w-md py-2 px-3 text-center border-end">
+                            <p class="mb-1 text-muted fs-sm">
+                                @if (\Carbon\Carbon::parse($items->start)->format('Y-m-d') === \Carbon\Carbon::parse($items->end)->format('Y-m-d'))
+                                    {{ \Carbon\Carbon::parse($items->start)->format('D, d M') }}
+                                @else
+                                    {{ \Carbon\Carbon::parse($items->start)->format('D, d M') }} <br/> {{ \Carbon\Carbon::parse($items->end)->format('D, d M') }}
+                                @endif
+                            </p>
+                            <h6 class="mb-0">
+                                @if (\Carbon\Carbon::parse($items->start)->format('h:i A') === \Carbon\Carbon::parse($items->end)->format('h:i A'))
+                                {{ \Carbon\Carbon::parse($items->start)->format('h:i A') }}
+                            @else
+                                {{ \Carbon\Carbon::parse($items->start)->format('h:i A') }} <br/> {{ \Carbon\Carbon::parse($items->end)->format('h:i A') }}
+                            @endif
+                            </h6>
+
                         </div>
-                    </div>  
+                        <div class="flex-grow-1 px-3 py-2 overflow-hidden">
+                            <h6>{{ $items->title }}</h6>
+                            <p class="text-muted fs-sm text-truncate mb-0">{{  $items->description }}</p>
+                        </div>
+                    </div>
+              
                     @endforeach
              
                 </div>

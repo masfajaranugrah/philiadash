@@ -1,70 +1,13 @@
 
 @extends('layouts.master')
-@section('title') @lang('translation.datatables') @endsection
+@section('title') Wahana @endsection
+
 @section('css')
-<style>
-    .w-10 {
-        width: 10% !important;
-    },
-    .w-20 {
-        width: 15% !important;
-    },
-    .w-30 {
-        width: 30% !important;
-    },
-    .w-40 {
-        width: 40% !important;
-    },
-    .w-50 {
-        width: 50% !important;
-    }
-     
-    .form-control {
-        max-width: 100%;
-    }
-
-    .chocolat-image {
-        max-height: 150px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-
-    .img-fluid {
-        width: auto;
-        max-width: 100%;
-        height: auto;
-    }
-
-    /* Responsif: Menyusun elemen gambar dan nama file dalam satu baris */
-    .d-flex {
-        display: flex;
-        align-items: center;
-    }
-
-    .ms-3 {
-        margin-left: 1rem;
-    }
-
-    /* Jika ukuran gambar melebihi 400px, sesuaikan agar lebih responsif */
-    .img-fluid.chocolat-image {
-        width: 100%;
-        max-width: 200px;
-    }
-
-    /* Pastikan tampilan mobile-friendly */
-    @media (max-width: 576px) {
-        .chocolat-image {
-            max-width: 120px;
-            max-height: 120px;
-        }
-    }
-</style>
-</style>
+ 
 <!--datatable css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-
+ 
 <!--datatable responsive css-->
 <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
@@ -75,22 +18,14 @@
 @slot('title')Fasilitas @endslot
 @endcomponent
  
-@if(session('success'))
-<pre>{{ var_dump(session()->all()) }}</pre>
-@endif
- 
-
+   
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <button class="btn  btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">Add Fasilitas</button>
             </div>
-            <button type="button" data-toast
-                                            data-toast-text="Welcome Back ! This is a Toast Notification"
-                                            data-toast-gravity="bottom" data-toast-position="right"
-                                            data-toast-duration="3000" data-toast-close="close"
-                                            class="btn btn-light w-xs">Bottom Right</button>
+        
                              
                
             <div class="card-body">
@@ -195,7 +130,7 @@
                     <!-- Tempat untuk menampilkan preview gambar -->
                     <div class="mb-3" id="image-preview-container" style="display:none;">
                         <label class="form-label">Preview Gambar:</label>
-                        <img id="image-preview" src="" alt="Preview Gambar" class="img-fluid" style="max-width: 300px;">
+                        <img id="image-preview" src="" alt="Preview Gambar" class="img-fluid" style="max-width: 100px;">
                     </div>
                 </div>
 
@@ -285,15 +220,13 @@
 @endforeach
 
  
-
  
 <!--end row-->
 @endsection
 @section('script')
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+ 
 <!--datatable js-->
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
@@ -305,8 +238,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="{{ URL::asset('build/libs/prismjs/prism.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/notifications.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+ <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ URL::asset('build/js/pages/sweetalerts.init.js') }}"></script>
   <script>

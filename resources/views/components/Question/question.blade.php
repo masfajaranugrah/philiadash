@@ -1,64 +1,7 @@
 @extends('layouts.master')
-@section('title') @lang('translation.datatables') @endsection
+@section('title') FAQ @endsection
 @section('css')
-<style>
-    .w-10 {
-        width: 10% !important;
-    },
-    .w-20 {
-        width: 15% !important;
-    },
-    .w-30 {
-        width: 30% !important;
-    },
-    .w-40 {
-        width: 40% !important;
-    },
-    .w-50 {
-        width: 50% !important;
-    }
-     
-    .form-control {
-        max-width: 100%;
-    }
-
-    .chocolat-image {
-        max-height: 150px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-
-    .img-fluid {
-        width: auto;
-        max-width: 100%;
-        height: auto;
-    }
-
-    /* Responsif: Menyusun elemen gambar dan nama file dalam satu baris */
-    .d-flex {
-        display: flex;
-        align-items: center;
-    }
-
-    .ms-3 {
-        margin-left: 1rem;
-    }
-
-    /* Jika ukuran gambar melebihi 400px, sesuaikan agar lebih responsif */
-    .img-fluid.chocolat-image {
-        width: 100%;
-        max-width: 200px;
-    }
-
-    /* Pastikan tampilan mobile-friendly */
-    @media (max-width: 576px) {
-        .chocolat-image {
-            max-width: 120px;
-            max-height: 120px;
-        }
-    }
-</style>
-</style>
+ 
 <!--datatable css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
@@ -74,7 +17,9 @@
 @endcomponent
  
  
- 
+@session("success")
+toastr.success("{{ $value }}", "Success");
+@endsession
  
 
 <div class="row">

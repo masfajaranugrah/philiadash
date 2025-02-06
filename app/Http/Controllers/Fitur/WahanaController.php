@@ -61,7 +61,7 @@ use Illuminate\Support\Facades\Storage;
             ]);
         }
 
-        return redirect('wahana-view')->with('success', 'create new barang success ');
+        return redirect('wahana-view')->with('success', 'fasilitas wahana berhasil di buat! ');
     }
     
  
@@ -106,7 +106,7 @@ use Illuminate\Support\Facades\Storage;
             $wahana->update(['images' => $file_name]);
         }
     
-return redirect('wahana-view')->with('success', 'Update barang berhasil!');
+return redirect('wahana-view')->with('success', 'Update fasilitas wahana berhasil!');
     }
 
  
@@ -132,7 +132,7 @@ return redirect('wahana-view')->with('success', 'Update barang berhasil!');
         // Hapus data dari database
         $wahana->delete();
     
-        return redirect()->back()->with('success', 'Wahana dan gambar berhasil dihapus.');
+        return redirect()->back()->with('success', 'Fasilitas wahana dan gambar berhasil dihapus.');
     }
    
 }

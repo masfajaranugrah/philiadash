@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -23,13 +23,17 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-
+    protected function redirectTo()
+    {
+        return route('login');
+    }
+    
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -50,7 +54,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'firstname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
         ]);
@@ -64,10 +68,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        return UserProfile::create([
+         'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+        'description' => $data['description'] ?? '',
+        'firstname' => $data['firstname'],
+        'lastname' => $data['lastname'] ?? '',
+        'phone_number' => $data['phone_number'] ?? '',
         ]);
+ 
     }
-}
+}    
