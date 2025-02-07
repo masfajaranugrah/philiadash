@@ -28,14 +28,14 @@
         <div class="position-relative mt-n3">
             <div class="avatar-lg position-relative">
                 <img src="build/images/users/avatar-4.jpg" alt="user-img" class="img-thumbnail rounded-circle user-profile-image" style="z-index: 1;">
-                {{-- <div class="avatar-xs p-0 rounded-circle profile-photo-edit position-absolute end-0 bottom-0">
+                <div class="avatar-xs p-0 rounded-circle profile-photo-edit position-absolute end-0 bottom-0">
                     <input id="profile-img-file-input" type="file" class="profile-img-file-input d-none">
                     <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                         <span class="avatar-title rounded-circle bg-light text-body">
                             <i class="bi bi-camera"></i>
                         </span>
                     </label>
-                </div> --}}
+                </div>
             </div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
