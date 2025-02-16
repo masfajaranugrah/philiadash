@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Fitur\QuestionController;
+use App\Http\Controllers\Fitur\WahanaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
  use App\Http\Controllers\VisitorController;
+use App\Http\Controllers\WhatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +26,10 @@ use Illuminate\Support\Facades\Route;
  
 Route::post('/track-visitor', [VisitorController::class, 'trackVisitor']);
 Route::get('/visitor/device-counts', [VisitorController::class, 'getDeviceCounts']);
+Route::get('/wahana',[WahanaController::class, 'index']);
+Route::get('/question',[QuestionController::class, 'index']);
+
+ Route::get('/whats', [WhatController::class, 'index']);
 
 
 use App\Http\Controllers\EventController;

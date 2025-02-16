@@ -10,8 +10,8 @@
             <div class="row gy-4">
             
                 <div class="col-sm-4 ">
-                    <div class="text-center">
-                        <p class="text-uppercase fw-medium text-muted text-truncate fs-md">Trafic</p>
+                    <div class="text-left">
+                        <p class="text-uppercase fw-bold text-muted text-truncate fs-md">Trafic</p>
                         
                     </div><!-- end card -->
                 </div>
@@ -142,7 +142,11 @@
 @section('script')
 <!-- apexcharts -->
 <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
-
+<script>
+    window.Laravel = {
+        apiUrl: "{{ config('app.API_URL') }}"
+    };
+</script>
 <!-- dashboard init -->
 <script src="{{ URL::asset('build/libs/list.js/list.min.js') }}"></script>
 <script src="{{ URL::asset('build/js/pages/dashboard-analytics.init.js') }}"></script>

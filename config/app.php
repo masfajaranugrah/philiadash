@@ -54,6 +54,7 @@ return [
     | your application so that it is used when running Artisan tasks.
     |
     */
+    'API_URL' => env('APP_URL', 'http://192.168.1.22:8000'),
 
     'url' => env('APP_URL', 'http://localhost'),
 

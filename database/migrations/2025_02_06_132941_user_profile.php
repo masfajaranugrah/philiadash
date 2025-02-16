@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('phone_number', 15)->nullable(); // Bisa kosong
             $table->string('firstname');
             $table->string('lastname')->nullable(); // Bisa kosong
-            $table->text('description')->nullable(); // Bisa kosong
+            $table->string('profile')->nullable(); // Bisa kosong
+            $table->text('description')->nullable();  // Bisa kosong
+            $table->string('foreground')->nullable(); // Bisa kosong
             $table->timestamps();
         });
     }

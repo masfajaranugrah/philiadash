@@ -18,16 +18,36 @@
     <div class="card">
         <div class="profile-foreground position-relative">
             <div class="profile-wid-bg position-static">
-                <img src="build/images/small/img-3.jpg" alt="" class="profile-wid-img card-img-top">
+                @if (Auth::user()->foreground == null)
+                <img src="build/images/small/img-3.jpg" class="profile-wid-img card-img-top">
+                @else
+                <img src="{{ asset('storage/foreground/' . Auth::user()->foreground) }}" class="profile-wid-img card-img-top">
+    
+                @endif
             </div>
             <div class="bg-overlay bg-primary bg-opacity-75 card-img-top"></div>
         </div>
 
         <div class="card-body mt-n5">
             <div class="position-relative mt-n3">
-                <div class="avatar-lg">
-                    <img src="build/images/users/avatar-4.jpg" alt="user-img" class="img-thumbnail rounded-circle" style="z-index: 1;">
+                <div class="avatar-lg position-relative">
+                    @if (Auth::user()->profile == null)
+                    <img src="build/images/users/avatar-4.jpg" 
+                    alt="profile" 
+                    class="img-thumbnail rounded-circle user-profile-image" 
+                    style="width: 100px; height: 100px; object-fit: cover; object-position: center; z-index: 1;">
+                        @else
+                        <img src="{{ asset('storage/profile/' . Auth::user()->profile) }}" 
+                        alt="{{ Auth::user()->profile }}" 
+                        class="img-thumbnail rounded-circle user-profile-image" 
+                        style="width: 100px; height: 100px; object-fit: cover; object-position: center; z-index: 1;">
+
+                  
+                    @endif
+                  
+                        
                 </div>
+                
             </div>
             <div class="d-flex align-items-center justify-content-between">
                 <div class="mt-3">

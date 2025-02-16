@@ -22,7 +22,9 @@ class UserProfile extends Authenticatable
         'password',
         'email',
         'phone_number',
-        'description'
+        'description',
+        'profile',
+        'foreground'
     ];
 
     /**

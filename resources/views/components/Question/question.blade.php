@@ -5,7 +5,23 @@
 <!--datatable css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
-
+<style>
+    .modal-content {
+    position: relative;
+    display: flex
+;
+    flex-direction: column;
+    width: 100%;
+    height: 100% !important;
+    color: var(--tb-modal-color);
+    pointer-events: auto;
+    background-color: var(--tb-modal-bg);
+    background-clip: padding-box;
+    border: var(--tb-modal-border-width) solid var(--tb-modal-border-color);
+    border-radius: var(--tb-modal-border-radius);
+    outline: 0;
+}
+</style>
 <!--datatable responsive css-->
 <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />

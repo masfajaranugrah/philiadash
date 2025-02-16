@@ -287,6 +287,11 @@
 
 @endsection
 @section('script')
+<script>
+    window.Laravel = {
+        apiUrl: "{{ config('app.API_URL') }}"
+    };
+</script>
 <script src="{{ URL::asset('build/libs/fullcalendar/index.global.min.js') }}"></script>
 <script src="{{ URL::asset('build/js/pages/calendar.init.js') }}"></script>
 <script src="{{ URL::asset('build/js/app.js') }}"></script>

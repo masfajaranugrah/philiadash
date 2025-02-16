@@ -14,7 +14,7 @@ return [
 
     'supports_credentials' => true,
 
-    'allowed_origins' => ['http://192.168.1.22:5173'],  // React app URL
+    'allowed_origins' => ['http://192.168.1.22:3000'],  // React app URL
 
 
     'allowed_origins_patterns' => [],

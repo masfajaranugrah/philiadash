@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo">
-                    <a href="index" class="logo logo-dark">
+                    <a  class="logo logo-dark">
                         <span class="logo-sm">
                             <h1 class="text-white">PH</h1>
                         </span>
@@ -12,7 +12,7 @@
                             <h1 class="text-white">PH</h1>
                         </span>
                     </a>
-                    <a href="index" class="logo logo-light">
+                    <a  class="logo logo-light">
                         <span class="logo-sm">
                             <h1 class="text-white">PH</h1>
                         </span>
@@ -59,13 +59,15 @@
                 <div class="dropdown ms-sm-3 topbar-head-dropdown dropdown-hover-end header-item topbar-user">
                     <button type="button" class="btn shadow-none btn-icon" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="build/images/users/avatar-1.jpg" alt="Header Avatar">
+                        
+                            <img class="rounded-circle header-profile-user" src="{{ asset('storage/profile/' . Auth::user()->profile) }}" alt="{{ Auth::user()->profile }}">
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
                         <h6 class="dropdown-header " style="font-size: 15px">Welcome {{ Auth::user()->firstname }}</h6>
                        
+                        <a class="dropdown-item fs-sm" href="{{ route('user') }}"><span class="badge bg-success-subtle text-success float-end ms-2">New</span><i class="bi bi-person-circle text-muted align-middle me-1"></i>  <span class="align-middle">Setting</span></a>
                         <a class="dropdown-item fs-sm" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="bi bi-box-arrow-right text-muted align-middle me-1"></i> <span class="align-middle" data-key="t-logout"> @lang('translation.logout')</span></a>
                          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf

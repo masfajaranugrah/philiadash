@@ -9,27 +9,47 @@
 @endcomponent
 
  
-
+<form action="{{ route('profile.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PATCH')
 <div class="card">
     <div class="profile-foreground position-relative">
         <div class="profile-wid-bg position-static">
+            @if (Auth::user()->foreground == null)
             <img src="build/images/small/img-3.jpg" class="profile-wid-img card-img-top">
-            {{-- <div>
-                <input id="profile-foreground-img-file-input" type="file" class="profile-foreground-img-file-input d-none">
+            @else
+            <img src="{{ asset('storage/foreground/' . Auth::user()->foreground) }}" class="profile-wid-img card-img-top">
+
+            @endif
+            <div>
+                <input id="profile-foreground-img-file-input" name="foreground" type="file" class="profile-foreground-img-file-input d-none">
                 <label for="profile-foreground-img-file-input" class="profile-photo-edit btn btn-light btn-sm position-absolute end-0 top-0 m-3 z-1">
                     <i class="ri-image-edit-line align-bottom me-1"></i> Edit Cover Images
                 </label>
-            </div> --}}
+            </div>
         </div>
         <div class="bg-overlay bg-primary bg-opacity-75 card-img-top"></div>
     </div>
-
+    
     <div class="card-body mt-n5">
         <div class="position-relative mt-n3">
             <div class="avatar-lg position-relative">
-                <img src="build/images/users/avatar-4.jpg" alt="user-img" class="img-thumbnail rounded-circle user-profile-image" style="z-index: 1;">
+                @if (Auth::user()->profile == null)
+                <img src="build/images/users/avatar-4.jpg" 
+                alt="profile" 
+                class="img-thumbnail rounded-circle user-profile-image" 
+                style="width: 100px; height: 100px; object-fit: cover; object-position: center; z-index: 1;">
+                    @else
+                    <img src="{{ asset('storage/profile/' . Auth::user()->profile) }}" 
+                    alt="{{ Auth::user()->profile }}" 
+                    class="img-thumbnail rounded-circle user-profile-image" 
+                    style="width: 100px; height: 100px; object-fit: cover; object-position: center; z-index: 1;">
+
+              
+                @endif
+                
                 <div class="avatar-xs p-0 rounded-circle profile-photo-edit position-absolute end-0 bottom-0">
-                    <input id="profile-img-file-input" type="file" class="profile-img-file-input d-none">
+                    <input id="profile-img-file-input" name="profile" type="file" class="profile-img-file-input d-none">
                     <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                         <span class="avatar-title rounded-circle bg-light text-body">
                             <i class="bi bi-camera"></i>
@@ -37,6 +57,7 @@
                     </label>
                 </div>
             </div>
+            
         </div>
         <div class="d-flex align-items-center justify-content-between">
             <div class="mt-3">
@@ -81,9 +102,7 @@
                         <h6 class="card-title mb-0">Personal Details</h6>
                     </div>
                     <div class="card-body">
-                          <form action="{{ route('profile.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PATCH')
+                         
                             <div class="row">
                                 <!-- First Name -->
                                 <div class="col-lg-6">

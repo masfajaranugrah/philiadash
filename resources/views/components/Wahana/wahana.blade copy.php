@@ -52,10 +52,10 @@
                         <tr>
                             <td class="w-20 text-wrap">{{ $items->title }}</td>
                             
-                            <td class="w-20 text-wrap">{!! $items->description !!}</td>
+                            <td class="w-3 text-wrap">{!! $items->description !!}</td>
                              
-                            <td class="w-20 text-wrap">{{ $items->location }}</td>
-                            <td class="w-20 text-wrap">{{ 'Rp ' . number_format($items->price, 0, ',', '.') }}</td>
+                            <td class="w-40 text-wrap">{{ $items->location }}</td>
+                            <td class="w-40 text-wrap">{{ 'Rp ' . number_format($items->price, 0, ',', '.') }}</td>
                             
                             <td>
                                 @php
@@ -75,7 +75,8 @@
                                     @endif
                                 </div>
                             </td>
-                   
+                            
+                            
                             <td>
                                 <div class="d-flex gap-2">
                                     <div class="edit">
@@ -115,21 +116,25 @@
             </div>
             <form class="tablelist-form" action="{{route('create')}}" method="post" enctype="multipart/form-data">
                 @csrf
-                <div class="modal-body">
+                <div class="modal-body ">
 
                     <div class="mb-3" >
                         <label for="id-field" class="form-label">Judul</label>
                         <input type="text" class="form-control" name="title" id="validationTooltip01" placeholder="Masukkan Judul"  required>
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="validationTooltip02" class="form-label">Deskripsi</label>
                         <textarea class="ckeditor-classic" name="description" ></textarea>
-                    </div>
+                   
 
+                   
+                    </div> --}}
+                    
+                    
                     <div class="mb-3">
                         <label for="email-field" class="form-label">Lokasi</label>
-                        <input type="text" class="form-control" name="location" id="validationTooltip02"  placeholder="Masukkan Lokasi"    required>
+                        <input type="text" class="form-control" name="location" id="validationTooltip02"  placeholder="Masukkan Lokasi" required>
                     </div>
 
                     <div class="mb-3">
@@ -138,10 +143,7 @@
                         <input type="hidden" name="price" id="price-hidden">
                     </div>
 
-                    {{-- <div class="mb-3">
-                        <label for="date-field" class="form-label">Gambar</label>
-                        <input type="file" id="date-field" class="form-control" name="images" placeholder="Select Date" required >
-                    </div> --}}
+                  
 
                     <div class="mb-3">
                         <label for="images-field" class="form-label">Gambar</label>
@@ -158,136 +160,66 @@
                         <label class="form-label">Preview Gambar:</label>
                         <div id="image-preview" class="d-flex flex-wrap gap-2"></div>
                     </div>
-                </div>
 
- 
-            
+      
+                    <div class="mb-3">
+                        <label for="email-field" class="form-label">Lokasi</label>
+                        <input type="text" class="form-control" name="location" id="validationTooltip02"  placeholder="Masukkan Lokasi" required>
+                    </div>
 
+                    
+                    <div class="modal-footer">
 
-
-                <div class="modal-footer">
                     <div class="hstack gap-2 justify-content-end">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success" id="add-btn">Add Fasilitas</button>
                         <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
                     </div>
                 </div>
-            </form>
-        </div>
-    </div>
-</div>
+       
  
-{{-- edit   --}}
-@foreach ($wahana as $items)
-  <div class="modal fade" id="EditModal-{{ $items->id_wahana }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content">
-            <div class="modal-header bg-light pad">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Fasilitas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-            </div>
-            <form class="tablelist-form" action="{{ route('update', $items->id_wahana) }}" method="post" enctype="multipart/form-data">
-                @method('PATCH')
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="id-field" class="form-label">Title</label>
-                        <input type="text" class="form-control" name="title" value="{{ $items->title }}" required>
-                    </div>
+            
 
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Deskripsi</label>
-                        <textarea class="ckeditor-classic" name="description">{{ $items->description }}</textarea>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="location" class="form-label">Location</label>
-                        <input type="text" class="form-control" name="location" value="{{ $items->location }}" required>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Price</label>
-                        <input type="text" class="form-control" value="Rp {{ number_format($items->price, 0, ',', '.') }}" required>
-                        <input type="hidden" name="price" value="{{ $items->price }}">
-                    </div>
-
-                  <!-- Preview Gambar Lama dengan tombol hapus -->
-<div class="mb-3">
-    <label class="form-label">Gambar Lama:</label>
-    <div class="d-flex flex-wrap gap-2">
-        @php
-            $images = json_decode($items->images, true) ?? [];
-        @endphp
-
-        @if($images && is_array($images))
-            @foreach ($images as $image)
-                <div class="position-relative image-container">
-                    <img src="{{ asset('storage/wahana/' . trim($image)) }}" class="rounded" width="100" height="100">
-                    <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 remove-image" data-image="{{ $image }}">X</button>
-                    <input type="hidden" name="old_images[]" value="{{ $image }}">
-                </div>
-            @endforeach
-        @else
-            <p>Tidak ada gambar lama.</p>
-        @endif
-    </div>
-</div>
-
-                    
-                    <!-- Upload Gambar Baru -->
-                    <div class="mb-3">
-                        <label class="form-label">Tambah Gambar Baru:</label>
-                        <div id="image-upload-container-edit-{{ $items->id_wahana }}">
-                            <div class="d-flex align-items-center mb-2">
-                                <input type="file" class="form-control image-input-edit" name="images[]" accept="image/*" multiple onchange="previewImagesEdit({{ $items->id_wahana }})">
-                                <button type="button" class="btn btn-primary ms-2" onclick="addImageInputEdit({{ $items->id_wahana }})">+</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Preview Gambar Baru -->
-                    <div class="mb-3" id="image-preview-container-edit-{{ $items->id_wahana }}" style="display:none;">
-                        <label class="form-label">Preview Gambar:</label>
-                        <div id="image-preview-edit-{{ $items->id_wahana }}" class="d-flex flex-wrap gap-2"></div>
-                    </div>
-                     
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Edit Fasilitas</button>
-                </div>
             </form>
         </div>
     </div>
-  </div>
-@endforeach
+</div>
 
+ 
+@foreach($wahana as $item)
+<div class="modal fade" id="EditModal-{{ $item->id_wahana }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Fasilitas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('update', $item->id_wahana) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PATCH')
+
+                   
+
+                  
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 
  
  
 <!--end row-->
 @endsection
 @section('script')
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".remove-image").forEach(button => {
-        button.addEventListener("click", function () {
-            let imageContainer = this.closest(".image-container");
-            let hiddenInput = imageContainer.querySelector("input[name='old_images[]']");
-
-            // Hapus elemen dari DOM
-            imageContainer.remove();
-
-            // Kosongkan input hidden agar tidak dikirim ke backend
-            if (hiddenInput) {
-                hiddenInput.value = "";
-            }
-        });
-    });
-});
-
-</script>
   <script>
     function previewImage(event, id) {
         let reader = new FileReader();
@@ -301,7 +233,7 @@
      
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-   <script>
+  {{-- <script>
     function addImageInput() {
         let container = document.getElementById('image-upload-container');
         let newInputDiv = document.createElement('div');
@@ -328,7 +260,6 @@
         newInputDiv.appendChild(removeBtn);
         container.appendChild(newInputDiv);
     }
-  
     
     function previewImages() {
         let previewContainer = document.getElementById('image-preview-container');
@@ -361,82 +292,8 @@
             reader.readAsDataURL(file);
         });
     }
-
- 
- 
     </script>  
- 
-
-
-
-
- <script>
-    function addImageInputEdit(id) {
-    let container = document.getElementById(`image-upload-container-edit-${id}`);
-    let newInputDiv = document.createElement('div');
-    newInputDiv.classList.add('d-flex', 'align-items-center', 'mb-2');
-
-    let newInput = document.createElement('input');
-    newInput.type = 'file';
-    newInput.className = 'form-control image-input-edit';
-    newInput.name = 'images[]';
-    newInput.accept = 'image/*';
-    newInput.multiple = true; 
-    newInput.addEventListener('change', function () {
-        previewImagesEdit(id);
-    });
-
-    let removeBtn = document.createElement('button');
-    removeBtn.type = 'button';
-    removeBtn.className = 'btn btn-danger ms-2';
-    removeBtn.textContent = 'x';
-    removeBtn.onclick = function () {
-        container.removeChild(newInputDiv);
-        previewImagesEdit(id);
-    };
-
-    newInputDiv.appendChild(newInput);
-    newInputDiv.appendChild(removeBtn);
-    container.appendChild(newInputDiv);
-}
-
-
-    function previewImagesEdit(id) {
-    let previewContainerEdit = document.getElementById(`image-preview-container-edit-${id}`);
-    let previewDivEdit = document.getElementById(`image-preview-edit-${id}`);
-    previewDivEdit.innerHTML = ""; // Kosongkan preview sebelum memperbarui
-
-    let allFiles = [];
-
-    document.querySelectorAll(`#image-upload-container-edit-${id} .image-input-edit`).forEach(input => {
-        Array.from(input.files).forEach(file => {
-            allFiles.push(file);
-        });
-    });
-
-    if (allFiles.length > 0) {
-        previewContainerEdit.style.display = "block";
-    } else {
-        previewContainerEdit.style.display = "none";
-    }
-
-    allFiles.forEach(file => {
-        let reader = new FileReader();
-        reader.onload = function (e) {
-            let img = document.createElement('img');
-            img.src = e.target.result;
-            img.className = 'img-fluid rounded';
-            img.style.maxWidth = '100px';
-            img.style.height = '100px';
-            img.style.objectFit = 'cover';
-            img.style.border = '1px solid #ddd';
-            previewDivEdit.appendChild(img);
-        };
-        reader.readAsDataURL(file);
-    });
-}
-
-</script>
+     
 <!--datatable js-->
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
@@ -451,7 +308,7 @@
  <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
 <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ URL::asset('build/js/pages/sweetalerts.init.js') }}"></script>
-    <script>
+  {{-- <script>
     document.getElementById("price-input").addEventListener("input", function () {
         let value = this.value.replace(/[^0-9]/g, ""); // Hanya angka
         if (value) {
@@ -521,5 +378,5 @@
 
 <script src="{{ URL::asset('build/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
 <script src="{{ URL::asset('build/js/pages/form-editor.init.js') }}"></script>
-<script src="{{ URL::asset('build/js/app.js') }}"></script>
+ <script src="{{ URL::asset('build/js/app.js') }}"></script>
 @endsection

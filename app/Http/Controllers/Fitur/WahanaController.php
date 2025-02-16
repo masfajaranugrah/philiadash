@@ -33,106 +33,168 @@ use Illuminate\Support\Facades\Storage;
      * Show the form for creating a new resource.
      */
  
-    public function store(Request $request)
-    {
-
-  
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'location' => 'required|string|max:255',
-            'price' => 'required|integer|min:1',
-            'images' => 'required|image|mimes:jpeg,png,jpg,gif', 
-        ]);
-   
-        $gambar = $request->file('images');
-      
-        if ($gambar) {
-            $file_name = time() . '_' . $gambar->getClientOriginalName();
-            $gambar->storeAs('public/wahana/', $file_name);
-
-            Wahana::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'location' => $request->location,
-                'price' => $request->price,
-                'images' => $file_name,
-                
-            ]);
-        }
-
-        return redirect('wahana-view')->with('success', 'fasilitas wahana berhasil di buat! ');
-    }
+     public function store(Request $request)
+     {
+         $request->validate([
+             'title' => 'required|string|max:255',
+             'description' => 'required|string',
+             'location' => 'required|string|max:255',
+             'price' => 'required|integer|min:1',
+             'images' => 'required|array', // Validasi sebagai array
+             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi setiap gambar
+         ]);
+     
+         $imagePaths = [];
+     
+         if ($request->hasFile('images')) {
+             foreach ($request->file('images') as $image) {
+                 $file_name = time() . '_' . $image->getClientOriginalName();
+                 $image->storeAs('public/wahana/', $file_name);
+                 $imagePaths[] = $file_name; // Simpan nama file ke array
+             }
+         }
+     
+         // Simpan ke database dengan format JSON
+         Wahana::create([
+             'title' => $request->title,
+             'description' => $request->description,
+             'location' => $request->location,
+             'price' => $request->price,
+             'images' => json_encode($imagePaths), // Simpan sebagai JSON
+         ]);
+     
+         return redirect('wahana-view')->with('success', 'Fasilitas wahana berhasil dibuat!');
+     }
+     
     
  
-    /**
-     * Update the specified resource in storage.
-     */
+    //  public function update(Request $request, $id_wahana)
+    //  {
+    //      $wahana = Wahana::find($id_wahana);
+     
+    //      if (!$wahana) {
+    //          return redirect('wahana-view')->with('error', 'Data tidak ditemukan!');
+    //      }
+     
+    //      $request->validate([
+    //          'title' => 'required|string|max:255',
+    //          'description' => 'required|string',
+    //          'location' => 'required|string|max:255',
+    //          'price' => 'required|integer|min:1',
+    //          'images' => 'nullable|array',
+    //          'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+    //      ]);
+     
+    //      // Hapus gambar lama jika ada file baru diunggah
+    //      if ($request->hasFile('images')) {
+    //          $gambarSebelumnya = json_decode($wahana->images, true) ?? [];
+     
+    //          // Hapus semua gambar lama dari storage
+    //          foreach ($gambarSebelumnya as $gambar) {
+    //              if (Storage::exists('public/wahana/' . $gambar)) {
+    //                  Storage::delete('public/wahana/' . $gambar);
+    //              }
+    //          }
+     
+    //          // Upload gambar baru
+    //          $imagePaths = [];
+    //          foreach ($request->file('images') as $image) {
+    //              $file_name = time() . '_' . $image->getClientOriginalName();
+    //              $image->storeAs('public/wahana/', $file_name);
+    //              $imagePaths[] = $file_name;
+    //          }
+     
+    //          // Simpan gambar baru ke database dalam format JSON
+    //          $wahana->images = json_encode($imagePaths);
+    //      }
+     
+    //      // Update data lainnya
+    //      $wahana->update([
+    //          'title' => $request->title,
+    //          'description' => $request->description,
+    //          'location' => $request->location,
+    //          'price' => $request->price,
+    //          'images' => isset($imagePaths) ? json_encode($imagePaths) : $wahana->images
+    //      ]);
+     
+    //      return redirect('wahana-view')->with('success', 'Update fasilitas wahana berhasil!');
+    //  }
     public function update(Request $request, $id_wahana)
     {
-
-   
-    
         $wahana = Wahana::find($id_wahana);
-        
         if (!$wahana) {
             return redirect('wahana-view')->with('error', 'Data tidak ditemukan!');
         }
+            
+
+        // $request->validate([
+        //     'title' => 'required|string|max:255',
+        //     'description' => 'required|string',
+        //     'location' => 'required|string|max:255',
+        //     'price' => 'required|integer|min:1',
+        //     'images' => 'nullable|array',
+        //     'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        // ]);
+      
+       
+        // Ambil gambar lama dari database
+        $gambarSebelumnya = json_decode($wahana->images, true) ?? [];
+     
+        // Filter gambar lama yang akan dipertahankan
+        $gambarTerpilih = $request->old_images ?? [];
     
-        // Simpan nama gambar lama
-        $gambarSebelumnya = $wahana->images;
+        // Hapus gambar yang tidak ada di daftar gambar yang dipertahankan
+        $gambarDihapus = array_diff($gambarSebelumnya, $gambarTerpilih);
     
-        // Update data selain gambar
+        foreach ($gambarDihapus as $gambar) {
+            if (Storage::exists('public/wahana/' . $gambar)) {
+                Storage::delete('public/wahana/' . $gambar);
+            }
+        }
+    
+        // Upload gambar baru jika ada
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $file_name = time() . '_' . $image->getClientOriginalName();
+                $image->storeAs('public/wahana/', $file_name);
+                $gambarTerpilih[] = $file_name;
+            }
+        }
+    
+        // Simpan perubahan ke database
         $wahana->update([
             'title' => $request->title,
             'description' => $request->description,
             'location' => $request->location,
             'price' => $request->price,
+            'images' => json_encode($gambarTerpilih) // Simpan hanya gambar yang dipilih dan gambar baru
         ]);
     
-        // Jika ada gambar baru yang diunggah
-        if ($request->hasFile('images')) {
-            // Hapus gambar lama jika ada
-            if ($gambarSebelumnya && Storage::exists('public/wahana/' . $gambarSebelumnya)) {
-                Storage::delete('public/wahana/' . $gambarSebelumnya);
-            }
-    
-            // Upload gambar baru
-            $gambarBaru = $request->file('images');
-            $file_name = time() . '_' . $gambarBaru->getClientOriginalName();
-            $gambarBaru->storeAs('public/wahana', $file_name);
-    
-            // Simpan nama gambar baru ke database
-            $wahana->update(['images' => $file_name]);
-        }
-    
-return redirect('wahana-view')->with('success', 'Update fasilitas wahana berhasil!');
+        return redirect('wahana-view')->with('success', 'Update fasilitas wahana berhasil!');
     }
-
- 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id_wahana)
-    {
-        // Cari data wahana berdasarkan ID
-        $wahana = Wahana::find($id_wahana);
     
-        if (!$wahana) {
-            return redirect()->back()->with('error', 'Data tidak ditemukan.');
-        }
-    
-        // Cek apakah wahana memiliki gambar
-        if ($wahana->images && Storage::exists('public/wahana/' . $wahana->images)) {
-            // Hapus gambar lama dari storage
-            Storage::delete('public/wahana/' . $wahana->images);
-        }
-    
-        // Hapus data dari database
-        $wahana->delete();
-    
-        return redirect()->back()->with('success', 'Fasilitas wahana dan gambar berhasil dihapus.');
-    }
+     
+     public function destroy($id_wahana)
+     {
+         $wahana = Wahana::find($id_wahana);
+     
+         if (!$wahana) {
+             return redirect()->back()->with('error', 'Data tidak ditemukan.');
+         }
+     
+         // Hapus semua gambar yang tersimpan di storage
+         $gambarSebelumnya = json_decode($wahana->images, true) ?? [];
+     
+         foreach ($gambarSebelumnya as $gambar) {
+             if (Storage::exists('public/wahana/' . $gambar)) {
+                 Storage::delete('public/wahana/' . $gambar);
+             }
+         }
+     
+         // Hapus data dari database
+         $wahana->delete();
+     
+         return redirect()->back()->with('success', 'Fasilitas wahana dan semua gambar berhasil dihapus.');
+     }
    
 }
