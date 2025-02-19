@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 use App\Models\UserProfile;
@@ -10,6 +11,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
+
+
+    public function telp()
+    {
+        return response()->json(UserProfile::all())
+                         ->header('Access-Control-Allow-Origin', '*')
+                         ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+                         ->header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Authorization, Origin, Accept, X-Auth-Token');
+    }
     //index
     public function index()
     {
@@ -65,16 +75,23 @@ class UserController extends Controller
  
 public function update(Request $request, $id)
 {
-    $request->validate([
+    $validator = Validator::make($request->all(), [
         'email' => 'required|email',
         'description' => 'nullable|string|max:500',           
         'firstname' => 'required|string|max:255',
         'lastname' => 'required|string|max:255',
-        'phone_number' => 'required|string|max:15',
+        'phone_number' => ['required', 'string', 'regex:/^62\d{8,13}$/'],
         'profile' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
         'foreground' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
+    ], [
+        'phone_number.regex' => 'Nomor telepon harus diawali dengan 62 dan hanya boleh berisi angka tanpa spasi atau tanda baca.',
     ]);
-
+    
+    if ($validator->fails()) {
+        return redirect()->back()
+                         ->with('error', implode('<br>', $validator->errors()->all()))
+                         ->withInput();
+    }
     // Ambil data user berdasarkan ID
     $userProfile = UserProfile::findOrFail($id);
 

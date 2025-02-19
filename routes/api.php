@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Fitur\QuestionController;
 use App\Http\Controllers\Fitur\WahanaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
  use App\Http\Controllers\VisitorController;
@@ -30,6 +31,7 @@ Route::get('/wahana',[WahanaController::class, 'index']);
 Route::get('/question',[QuestionController::class, 'index']);
 
  Route::get('/whats', [WhatController::class, 'index']);
+ Route::get('/telp', [UserController::class, 'telp']);
 
 
 use App\Http\Controllers\EventController;
